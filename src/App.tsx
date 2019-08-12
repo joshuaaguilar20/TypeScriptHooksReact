@@ -22,23 +22,24 @@ const App: React.FC <AppProps> = (props) => {
   const arr = [0,1,2,3,4,5,65,22];
 
 
-  async function apiCall(){
+  const apiStuff = {
+    async apiCall(){
     let res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
     let json = await res.json();
     setFetch(true)
     console.log(json);
     let str = JSON.stringify(json);
     showData(str);
-  }
-
-  function test(){
+  },
+  test(){
     alert('Callback Function Called');
    if(!hasFetched){
-    apiCall() 
+    apiStuff.apiCall() 
    }   
   }
+  }
 
-  useEffect(test)
+  useEffect(apiStuff.test)
 
   return (
     <div className="App">
