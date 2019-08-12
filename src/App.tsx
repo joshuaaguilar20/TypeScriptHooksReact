@@ -47,7 +47,7 @@ const App: React.FC <AppProps> = (props) => {
     <h1>Count: {count}</h1>
     <h2>StringData: {apiData}</h2>
     {arr.map((value) => <button onClick={() => setCount(count + value)}>+{value}</button> )}
-    {}
+    
     </div>
   );
   } 
