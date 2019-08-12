@@ -1,26 +1,54 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {useState, useEffect} from 'react';
+/* 
+  The function takes an initial value and returns an array of arguments, 
+  with the item at the 0 index containing the state value, 
+  and the item at the 1 index containing a function to update the value
+  --------------------------------------------------------------------------------- 
+  The useEffect hook takes a function as an argument. useEffect replaces the componentDidMount, componentDidUpdate, and componentWillUnmount class methods. When the state of the component mounts or updates, 
+  React will execute the callback function. If your callback function returns a function itself,
+  React will execute this during componentWillUnmount
+*/
+interface AppProps {
+  color:string;
+  optional?:boolean;
+}
 
-const App: React.FC = () => {
+const App: React.FC <AppProps> = (props) => {
+  const [count, setCount] = useState(0);
+  const [hasFetched, setFetch ] = useState(false);
+  const [apiData, showData ] = useState('');
+  const arr = [0,1,2,3,4,5,65,22];
+
+
+  async function apiCall(){
+    let res = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    let json = await res.json();
+    setFetch(true)
+    console.log(json);
+    let str = JSON.stringify(json);
+    showData(str);
+  }
+
+  function test(){
+    alert('Callback Function Called');
+   if(!hasFetched){
+    apiCall() 
+   }   
+  }
+
+  useEffect(test)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <p> {props.color}</p>
+    <h1>Count: {count}</h1>
+    <h2>StringData: {apiData}</h2>
+    {arr.map((value) => <button onClick={() => setCount(count + value)}>+{value}</button> )}
+    {}
     </div>
   );
-}
+  } 
 
 export default App;
